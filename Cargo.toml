@@ -1,0 +1,28 @@
+[package]
+name = "resprite"
+version = "0.1.0"
+description = "A Rust sprite atlas generator for mapbox/maplibre"
+authors = ["Nikita Ofitserov <himikof@gmail.com>"]
+license = "Apache-2.0"
+edition = "2021"
+rust-version = "1.60"
+
+[dependencies]
+anyhow = "1.0.66"
+bpaf = { version = "0.7.7", features = ["derive", "dull-color", "autocomplete"] }
+globwalk = "0.8.1"
+png = "0.17.7"
+rayon = { version = "1.6.1", optional = true }
+rctree = "=0.5.0"  # Must be kept in-sync with resvg::usvg dependency
+resvg = { version = "0.28.0", default-features = false }
+serde_json = { version = "1.0.91", features = ["float_roundtrip"] }
+svgtypes = "0.9.0"
+xmltree = "0.10.3"
+
+[features]
+parallel = ["dep:rayon"]
+
+# Force miniz_oxide (used for PNG compression) use Release settings in Debug builds
+# See https://github.com/rust-lang/flate2-rs/issues/297
+[profile.dev.package.miniz_oxide]
+opt-level = 3
